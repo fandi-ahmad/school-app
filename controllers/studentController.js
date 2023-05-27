@@ -55,5 +55,39 @@ const createStudent = async (req, res) => {
     }
 }
 
+const updateStudent = async (req, res) => {
+    try {
+        const { id } = req.params
+        const { name, theClass } = req.body
+        const student = await Student.findByPk(id)
 
-module.exports = { findAllStudent, getStudentById, createStudent }
+        if (!student) {
+            return res.status(404).json({
+                status: 'failed',
+                message: 'data is not found'
+            })
+        }
+
+        student.name = name
+        student.class = theClass
+        student.save()      // save data to db
+
+        res.json({
+            status: 'ok',
+            data: {
+                id: student.id,
+                name: student.name,
+                class: student.class,
+                createdAt: student.createdAt,
+                updatedAt: student.updatedAt
+            }
+        })
+        
+    } catch (error) {
+        console.log(error, '<-- error update student')
+    }
+}
+
+
+
+module.exports = { findAllStudent, getStudentById, createStudent, updateStudent }
