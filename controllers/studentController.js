@@ -88,6 +88,27 @@ const updateStudent = async (req, res) => {
     }
 }
 
+const deleteStudent = async (req, res) => {
+    try {
+        const { id } = req.params
+        const student = await Student.findByPk(id)
+
+        if (!student) {
+            return res.status(404).json({
+                status: 'failed',
+                message: 'data is not found'
+            })
+        }
+
+        student.destroy()
+        res.json({
+            status: 'ok',
+            message: 'delete successfully'
+        })
+    } catch (error) {
+        console.log(error, 'error delete student');
+    }
+}
 
 
-module.exports = { findAllStudent, getStudentById, createStudent, updateStudent }
+module.exports = { findAllStudent, getStudentById, createStudent, updateStudent, deleteStudent }
