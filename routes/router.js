@@ -1,11 +1,6 @@
-const { findAllStudent, getStudentById, createStudent, updateStudent, deleteStudent } = require("../controllers/studentController")
-
 const router = require("express").Router()
+const studentsRouter = require('./studentsRouter')
 
-router.get('/students', findAllStudent)
-router.get('/students/:id', getStudentById)
-router.post('/students', createStudent)
-router.patch('/students/:id', updateStudent)
-router.delete('/students/:id', deleteStudent)
+router.use('/api/v1', studentsRouter)
 
 module.exports = router
